@@ -6,10 +6,13 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom"
 import SmsOutlinedIcon from '@mui/icons-material/SmsOutlined';
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 const Register = () => {
   const [error, setError] = useState(null);
-  const [imageUrl, setImageUrl] = useState(null); // Nuevo estado para la URL de la imagen
+  const [imageUrl, setImageUrl] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,6 +37,8 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setLoading(true);
   
     const displayName = e.target[0].value;
     const email = e.target[1].value;
@@ -47,6 +52,7 @@ const Register = () => {
       const uploadTask = uploadBytesResumable(storageRef, file);
   
       uploadTask.on('state_changed', null, async (error) => {
+        setLoading(false);
         setError(error.message);
       }, async () => {
         try {
@@ -77,11 +83,13 @@ const Register = () => {
           navigate("/welcome");
         } catch (error) {
           console.error("Error al registrar usuario:", error);
+          setLoading(false);
           setError(error.message);
         }
       });
     } catch (err) {
       console.error("Error al registrar usuario:", err);
+      setLoading(false);
       setError(err.message);
     }
   };
@@ -109,7 +117,10 @@ const Register = () => {
             )}
           </label>
 
-          <button>Registrarse</button>
+          <button type="submit" disabled={loading}>
+            {loading ? <CircularProgress size={20} color="inherit" /> : "Registrarse"}
+          </button>
+
           {error && <span>{error}</span>}
         </form>
         <p className="register-question">Tienes una cuenta? <Link className="register-question2" to={"/login"}>inicia sesión</Link></p>
