@@ -79,8 +79,6 @@ const Register = () => {
   
           // Guardar en localStorage
           localStorage.setItem("loggedIn", "true");
-  
-          navigate("/welcome");
         } catch (error) {
           console.error("Error al registrar usuario:", error);
           setLoading(false);

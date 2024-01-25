@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import gif from '../../img/online-video-chat.gif'
+import gif from '../../img/online-video-chat.gif';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useNavigate } from 'react-router-dom';
 
 export default function MenuAppBar() {
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleButtonClick = () => {
     setLoading(true);
@@ -13,8 +15,8 @@ export default function MenuAppBar() {
       // Simular el final del estado de carga
       setLoading(false);
 
-      // Redirigir a la página de chat o realizar otras acciones según sea necesario
-      window.location.href = '/chat';
+      // Redirigir a la página de chat
+      navigate('/chat');
     }, 4000);
   };
 
@@ -34,6 +36,6 @@ export default function MenuAppBar() {
           </button>
         </div>
       </div>
-      </div>
+    </div>
   );
 }
