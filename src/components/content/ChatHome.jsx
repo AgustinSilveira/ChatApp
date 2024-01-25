@@ -5,9 +5,11 @@ import MenuResponsive from "./chat/Welcome";
 
 const ChatHome = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
+  const [containerHeight, setContainerHeight] = useState(window.innerHeight);
 
   const handleResize = () => {
     setIsMobile(window.innerWidth <= 600);
+    setContainerHeight(window.innerHeight);
   };
 
   useEffect(() => {
@@ -20,14 +22,18 @@ const ChatHome = () => {
     };
   }, []); // Se ejecuta solo una vez al montar el componente
 
+  const containerStyle = {
+    height: isMobile ? "100vh" : `${containerHeight}px`,
+    overflow: "hidden", // Opcional, según tus necesidades
+  };
+
   return (
-    <div className="chatHome">
+    <div className="chatHome" style={containerStyle}>
       <div className="container-chatHome">
         {isMobile ? (
-            <>
-          <Sidebar />
+          <>
+            <Sidebar />
           </>
-          
         ) : (
           <>
             <Sidebar />
