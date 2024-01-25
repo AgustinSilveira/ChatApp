@@ -82,7 +82,10 @@ return (
                         onClick={() => width < 600 && handleSelect(chat[1]?.userInfo)}
                     >
                         <div className="userChat-chat" key={chat[0]} onClick={() => handleSelect(chat[1].userInfo)}>
+                          <div className="container-img-space">
                             <img src={chat[1]?.userInfo?.photoURL || ''} alt="" />
+                          </div>
+                            
                             <div className="userChatInfo">
                                 <span>{chat[1]?.userInfo?.displayName}</span>
                                 <p>{chat[1]?.lastMessage?.text}</p>
